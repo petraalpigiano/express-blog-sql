@@ -151,17 +151,28 @@ function modify(req, res) {
 }
 // DELETE
 function destroy(req, res) {
-  // ex PRENDO L'ID DALLA RICHIESTA
-  // const id = parseInt(req.params.id);
-  //   res.send(`Ho eliminato il post numero: ${id}`);
-  // RISPONDO CON LA LISTA DEI POST SENZA IL POSTO ELIMINATO
-  //   res.json(
-  //     posts.filter(function (currentPost) { // con filter fa piu sforzo computazionale che con splice
-  //       const currentId = currentPost.id;
-  //       return currentId !== id;
-  //     })
-  //   );
-  // RISPONDO CON LA LISTA DEI POST MA USANDO SPLICE
+  const id = parseInt(req.params.id);
+  const sqlPosts = `DELETE FROM posts WHERE id = ?`;
+
+  connection.query(sqlPosts, [id], (err, results) => {
+    if (err)
+      return res.status(500).json({
+        error: "Richiesta fallita!",
+      });
+    res.sendStatus(204);
+  });
+  // // ex PRENDO L'ID DALLA RICHIESTA
+  // // const id = parseInt(req.params.id);
+  // res.send(`Ho eliminato il post numero: ${id}`);
+  // // RISPONDO CON LA LISTA DEI POST SENZA IL POSTO ELIMINATO
+  // res.json(
+  //   posts.filter(function (currentPost) {
+  //     // con filter fa piu sforzo computazionale che con splice
+  //     const currentId = currentPost.id;
+  //     return currentId !== id;
+  //   })
+  // );
+  // // RISPONDO CON LA LISTA DEI POST MA USANDO SPLICE
   // let postDeleted = [...posts]; // con questo elimina dalla deep copy e non dall'originale, ma nella realta modifichiamo l'originale
   // // ex TROVO IL POST CON L'ID DELLA RICHIESTA
   // const postFound = posts.find((currentPost) => {
@@ -178,15 +189,15 @@ function destroy(req, res) {
   // postDeleted.splice(posts.indexOf(postFound), 1);
   // // ex RISPONDO CON LA LISTA DI POST
   // res.json(postDeleted);
-  // STAMPO NEL TERMINALE LA LISTA AGGIORNATA
-  //   console.log(
-  //     posts.filter(function (currentPost) {
-  //       const currentId = currentPost.id;
-  //       return currentId !== id;
-  //     })
-  //   );
-  //   RISPONDO CON STATO 204
-  //   res.sendStatus(204);
+  // // STAMPO NEL TERMINALE LA LISTA AGGIORNATA
+  // console.log(
+  //   posts.filter(function (currentPost) {
+  //     const currentId = currentPost.id;
+  //     return currentId !== id;
+  //   })
+  // );
+  // // RISPONDO CON STATO 204
+  // res.sendStatus(204);
 }
 
 export { index, show, create, update, modify, destroy };
