@@ -1,4 +1,4 @@
-import { posts } from "../data/db.js";
+import connection from "../data/db.js";
 
 // INDEX
 function index(req, res) {

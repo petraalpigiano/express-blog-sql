@@ -1,5 +1,4 @@
 import express from "express";
-import { port } from "./data/db.js";
 import postsRouter from "./routers/posts.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import notFoundHandler from "./middlewares/notFoundHandler.js";
@@ -7,6 +6,9 @@ import cors from "cors";
 
 // .EXPRESS
 const app = express();
+
+// PORTA
+const port = 3000;
 
 // MIDDLEWARE PER CORS
 app.use(
