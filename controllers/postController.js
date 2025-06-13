@@ -26,6 +26,16 @@ function index(req, res) {
 }
 // SHOW
 function show(req, res) {
+  const id = parseInt(req.params.id);
+  const sqlPosts = `SELECT * FROM posts WHERE id = ?`;
+
+  connection.query(sqlPosts, [id], (err, results) => {
+    if (err)
+      return res.status(500).json({
+        error: "Richiesta fallita!",
+      });
+    res.json(results);
+  });
   // // ex PRENDO L'ID DALLA RICHIESTA
   // const id = parseInt(req.params.id);
   // //   res.send(`Ecco il post numero: ${id}`);
